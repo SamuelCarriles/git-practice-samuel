@@ -49,3 +49,9 @@ def update_note(id : str, title = None, body = None) -> bool :
       n["date"] = str(date.today())
       return True
   return False
+
+def search_notes(title : str) -> list :
+  if not title :
+    return []
+  title = title.lower().strip()
+  return [n for n in notes if title in n["title"].lower()]
