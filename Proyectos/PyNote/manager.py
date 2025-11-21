@@ -8,20 +8,24 @@ Notes structure:
 '''
 import uuid
 from datetime import date
+from typing import Dict
 
 notes : list = []
 
 def new_id()-> str :
   return str(uuid.uuid4())
 
-def create_note(title : str, body :str, date_str : str = None) :
+def create_note(title : str, body :str, date_str : str = None) -> Dict[str,str]:
   if date_str is None :
     date_str = str(date.today())
-  notes.append(
-    {"id" : new_id(),
-     "title" : title,
-     "date" : date_str,
-     "body" : body})
+    
+  return {"id" : new_id(),
+          "title" : title,
+          "date" : date_str,
+          "body" : body}
+
+def store_note(note : Dict[str,str]) :
+  notes.append(note)
 
 def get_all_notes() -> list:
   return notes
