@@ -35,4 +35,17 @@ def delete_note(id : str) -> bool :
       notes.remove(n)
       return True
   return False
-  
+
+def update_note(id : str, title = None, body = None) -> bool :
+  for n in notes:
+    if n["id"] == id:
+      
+      if title is not None:
+        n["title"] = title
+        
+      if body is not None:
+        n["body"] = body
+        
+      n["date"] = str(date.today())
+      return True
+  return False
