@@ -22,15 +22,15 @@ class NoteCreate(BaseModel):
 	date : Optional[str] = None
 
 class NoteResponse(NoteCreate):
-    nota_id : str
+    note_id : str
     date : str
 
 # Endpoints
 
 @app.post('/notes/', response_model=NoteResponse,status_code=201)
-def create(new_note : NoteCreate):
+def create(payload : NoteCreate):
   return create_note(
-        title=new_note.title,
-        body=new_note.body,
-        date_str=new_note.date
+        title=payload.title,
+        body=payload.body,
+        date_str=payload.date
     )
