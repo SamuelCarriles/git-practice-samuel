@@ -2,7 +2,7 @@ import uuid
 from datetime import date
 from database import get_db
 from models import Note
-
+from typing import List
 def new_id()-> str :
   return str(uuid.uuid4())
 
@@ -36,7 +36,7 @@ def create_note(title : str, body :str, date_str : str = None) -> Note:
   
   return new_note 
 
-def get_all_notes() -> list[Note] :
+def get_all_notes() -> List[Note] :
   with get_db() as conn:
     rows = conn.execute('SELECT * FROM notes').fetchall()
   return [row_to_note(r) for r in rows]
@@ -52,11 +52,6 @@ def get_note_by_id(note_id : str) -> Note | None :
     return None
   
   return row_to_note(row)
-   
-def get_note_by_title(title : str) -> list[Note] :
-  with get_db() as conn:
-    rows = conn.execute('SELECT * FROM notes WHERE title = ?', title).fetchall()
-    return [row_to_note(r) for r in rows]
     
 def delete_note(note_id : str) -> bool :
   with get_db() as conn:
@@ -84,7 +79,7 @@ def update_note(note_id : str, title : str = None, body : str = None) -> bool :
       return False
   return cursor.rowcount > 0
 
-def search_notes(title : str) -> list[Note] :
+def search_notes(title : str) -> List[Note] :
   with get_db() as conn:
-    rows = conn.execute('SELECT * FROM notes WHERE title LIKE ? OR body LIKE ?', (f'%{title}%',f'%{title}%' )).fetchall()
+    rows = conn.execute('SELECT * FROM notes WHERE LOWER(title) LIKE ? OR LOWER(body) LIKE ?', (f'%{title}%',f'%{title}%' )).fetchall()
   return [row_to_note(r) for r in rows]
