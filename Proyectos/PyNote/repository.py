@@ -13,25 +13,28 @@ def row_to_note(row) -> Note :
     date=row['date'],
     body=row['body']
     )
-  
-def create_note(title : str, body :str, date_str : str = None) -> Note:
-  if date_str is None :
-    date_str = str(date.today())  
-  
-  return Note(
-    note_id=new_id(),
-    title=title,
-    date=date_str,
-    body=body
-    )
-
+ 
 def save_note(note: Note) -> str:
   with get_db() as conn:
       conn.execute(
           'INSERT INTO notes (note_id, title, date, body) VALUES (?, ?, ?, ?)',
           (note.note_id, note.title, note.date, note.body)
       )
-  return note.note_id  
+  return note.note_id 
+  
+def create_note(title : str, body :str, date_str : str = None) -> Note:
+  if date_str is None :
+    date_str = str(date.today())  
+  
+  new_note = Note(
+    note_id=new_id(),
+    title=title,
+    date=date_str,
+    body=body
+    ) 
+  save_note(new_note)
+  
+  return new_note 
 
 def get_all_notes() -> list[Note] :
   with get_db() as conn:
