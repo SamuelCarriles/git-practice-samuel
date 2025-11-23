@@ -21,7 +21,7 @@ def init_db():
   
   conn.execute('''
     CREATE TABLE IF NOT EXISTS notes(
-      id TEXT PRIMARY KEY  NOT NULL,
+      note_id TEXT PRIMARY KEY  NOT NULL,
       title TEXT NOT NULL,
       date TEXT NOT NULL,
       body TEXT
