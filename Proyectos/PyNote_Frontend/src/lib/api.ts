@@ -2,16 +2,12 @@
 import { Note, CreateNoteRequest, UpdateNoteRequest } from '@/types/note';
 
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
-
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY!;
 
 if (!API_BASE_URL || !API_KEY) {
-  throw new Error(
-    "Faltan variables de entorno: VITE_API_BASE_URL o VITE_API_KEY"
-  );
+  throw new Error("Faltan variables de entorno NEXT_PUBLIC_");
 }
-
 class ApiService {
   private getHeaders() {
     return {
