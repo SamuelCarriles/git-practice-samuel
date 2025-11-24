@@ -99,6 +99,9 @@ def search(q : str):
     return []
   return search_notes(q)
 
+from database import init_db
+init_db()
+
 import uvicorn
 import os
 
