@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Depends, Header, status
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, List
 from config import env
@@ -19,6 +20,14 @@ app = FastAPI(
 	version='0.1.0',
 	contact={"name": "Samuel"},
 	license_info={"name": "MIT"},
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 def verify_api_key(key : str = Header(...)) -> bool:
