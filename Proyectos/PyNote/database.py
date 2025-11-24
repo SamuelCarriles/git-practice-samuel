@@ -1,7 +1,7 @@
 import sqlite3
 from contextlib import contextmanager
-from config import env
-
+from config import get_config
+env =get_config()
 DB_PATH = env['db_path']
 
 @contextmanager
