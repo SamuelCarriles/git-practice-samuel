@@ -1,7 +1,8 @@
 import sqlite3
 from contextlib import contextmanager
+from config import env
 
-DB_PATH = 'notes.db'
+DB_PATH = env['db_path']
 
 @contextmanager
 def get_db():
