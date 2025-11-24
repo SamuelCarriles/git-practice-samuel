@@ -1,13 +1,22 @@
+// api.ts
 import { Note, CreateNoteRequest, UpdateNoteRequest } from '@/types/note';
 
-const API_BASE_URL = 'https://pynote-api.up.railway.app';
-const API_KEY = '38A9ED858B149137633EB931DD81F';
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
+
+
+if (!API_BASE_URL || !API_KEY) {
+  throw new Error(
+    "Faltan variables de entorno: VITE_API_BASE_URL o VITE_API_KEY"
+  );
+}
 
 class ApiService {
   private getHeaders() {
     return {
       'Content-Type': 'application/json',
-      'key': API_KEY,
+      'key': API_KEY, 
     };
   }
 
@@ -63,9 +72,12 @@ class ApiService {
   }
 
   async searchNotes(query: string): Promise<Note[]> {
-    const response = await fetch(`${API_BASE_URL}/search?q=${encodeURIComponent(query)}`, {
-      headers: this.getHeaders(),
-    });
+    const response = await fetch(
+      `${API_BASE_URL}/search?q=${encodeURIComponent(query)}`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
     return this.handleResponse<Note[]>(response);
   }
 }
