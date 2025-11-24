@@ -98,3 +98,10 @@ def search(q : str):
   if not q.strip():
     return []
   return search_notes(q)
+
+import uvicorn
+import os
+
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 8080)) 
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
